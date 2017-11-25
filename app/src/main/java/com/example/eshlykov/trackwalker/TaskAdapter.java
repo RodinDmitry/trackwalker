@@ -31,7 +31,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
         listItemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick( View view) {
+            public void onClick(View view) {
                 Intent intent = new Intent(getContext(), TaskDetailedActivity.class);
                 Log.d("Diction", "intenting");
                 intent.putExtra("task", currentTask.getBundle());

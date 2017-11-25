@@ -35,6 +35,10 @@ public class Task {
         finishTime = _finishTime;
     }
 
+    public String getTaskName() {
+        return taskName;
+    }
+
     public String getStartTime() {
         return df.format(startTime);
     }
