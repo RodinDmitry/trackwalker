@@ -24,7 +24,6 @@ public class TaskDetailedActivity extends AppCompatActivity {
         tvView.setText(task.getCreateTime());
         tvView = (TextView) findViewById(R.id.finish_time);
         tvView.setText(task.getFinishTime());
-        tvView = (TextView) findViewById(R.id.start_time);
 
 //        Для будущей стрелочки.
 //        Button button = (Button) findViewById(R.id.backArrow);
