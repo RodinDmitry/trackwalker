@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -43,8 +44,9 @@ public class DataBase {
     }
 
     class PhotoRows{
-        public static final String ID = "id";
         public static final String url = "urlCol";
+        public static final String serverId = "serverIdCol";
+        public static final String taskInd = "taskIndCol";
         public static final String taskId = "taskCol";
         public static final String field = "fieldCol";
     }
@@ -64,6 +66,28 @@ public class DataBase {
         return instance;
     }
 
+    public void addPhoto(Task task,  String field, Long serverId, int ind, Uri img) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PhotoRows.taskId, task.id);
+        contentValues.put(PhotoRows.field, field);
+        contentValues.put(PhotoRows.serverId, serverId);
+        contentValues.put(PhotoRows.taskInd, ind);
+        contentValues.put(PhotoRows.url, img.toString());
+        db.insert(photoTable, null, contentValues);
+    }
+
+    public void updatePhoto(Task task,  String field, Long serverId, int ind, Uri img) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PhotoRows.taskId, task.id);
+        contentValues.put(PhotoRows.field, field);
+        contentValues.put(PhotoRows.serverId, serverId);
+        contentValues.put(PhotoRows.taskInd, ind);
+        contentValues.put(PhotoRows.url, img.toString());
+        db.insert(photoTable, null, contentValues);
+    }
+    /*
     public void addTask(Task task) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -115,6 +139,7 @@ public class DataBase {
         String[] args = {word.getSrcWord()};
         db.delete(tableName, selection, args);
     }
+    */
 
     @Override
     protected void finalize() throws Throwable {
@@ -158,9 +183,11 @@ public class DataBase {
             TaskRows.finishTime + " integer, " +
             TaskRows.isDeleted + " integer" +
                     ");");
+
             db.execSQL("create table " + taskTable + " ("
-                    + PhotoRows.ID + " integer primary key autoincrement,"+
-                    PhotoRows.url + " text, " +
+                    + PhotoRows.url + " text primary key,"+
+                    PhotoRows.serverId + " integer, " +
+                    PhotoRows.taskInd + " integer, " +
             PhotoRows.taskId + " integer, " +
             PhotoRows.field + " text," +
             "FOREIGN KEY(" +PhotoRows.taskId + ") REFERENCES " + taskTable + "(" + TaskRows.ID+ "));");
