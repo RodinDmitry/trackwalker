@@ -15,6 +15,19 @@ public class Task {
     private String taskName = "";
     private Date startTime = new Date();
     private Date finishTime = new Date();
+    public Boolean taskIsGot = false;
+    public Boolean shuntingIsBegan = false;
+    public Boolean shuntingIsReady = false;
+    public Boolean shuntingIsEnded = false;
+    public Boolean viaductIsReady = false;
+    public Boolean vetseIsVieved = false;
+    public Boolean actIsSigned = false;
+    public Boolean rnpIsConnected = false;
+    public Boolean vetseIsReadyToNaliv = false;
+    public Boolean nalivIsStarted = false;
+    public Boolean rnlIsDeconnected = false;
+    public Boolean selectionIsOver = false;
+    public Boolean shuntingIsOver = false;
 
     DateFormat df = new SimpleDateFormat("HH:mm");
 

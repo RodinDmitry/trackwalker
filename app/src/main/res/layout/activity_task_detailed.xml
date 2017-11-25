@@ -67,7 +67,6 @@
                 android:layout_height="wrap_content"
                 android:text="Задача получена, инструктаж пройден" />
 
-
             <CheckBox
                 android:id="@+id/shunting_is_began"
                 android:layout_width="match_parent"
@@ -148,7 +147,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Отбор проб завершен" />
-
 
             <TextView
                 android:layout_width="match_parent"
