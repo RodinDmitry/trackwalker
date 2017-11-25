@@ -17,6 +17,7 @@ public class Task {
     @GeneratedValue
     public long id;
 
+    public String operator;
     public String name;
     public String description;
     public Date createTime;
@@ -35,7 +36,7 @@ public class Task {
     public Date startFillTime;//10
     public Date endDisconnectionTime;//11
     public Date endProbeTime;//12
-    public String numbers;//13
+    public ArrayList<Long> numbers;//13
     public Date readyWatchTime2;//14
     public Date acceptTime2;//15
     public ArrayList<Long> acceptImg2;//15
