@@ -15,11 +15,11 @@ import java.util.Date;
  */
 
 public class Task {
-    public String name;
+    public String name = "";
     public long id;
     public String operator;
     public String description;
-    public Date createTime;
+    public Date createTime = new Date();
     public Date receiveDate;//1
     public Date startDate;
     public Date prepareStartTime;//2
@@ -47,7 +47,7 @@ public class Task {
     public ArrayList<Long> prepareImgId2;
     public Date prepareEndTime2; //16
     public Date endManeuresTime2; //17
-    public Date finishTime;
+    public Date finishTime = new Date();
     public Boolean isDeleted;
 
     void uploadProgress(){
@@ -130,7 +130,7 @@ public class Task {
     public Bundle getBundle() {
         Bundle bundle = new Bundle();
         bundle.putCharArray("taskName", name.toCharArray());
-        bundle.putCharArray("startTime", getCreateTime().toCharArray());
+        bundle.putCharArray("createTime", getCreateTime().toCharArray());
         bundle.putCharArray("finishTime", getFinishTime().toCharArray());
         return bundle;
     }
