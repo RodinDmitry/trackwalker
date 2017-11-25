@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:weightSum="1"
     tools:context="com.example.eshlykov.trackwalker.TaskDetailedActivity">
 
     <LinearLayout
@@ -39,16 +40,129 @@
                 android:layout_weight="1"
                 android:text="12:10" />
 
-
         </LinearLayout>
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/task_image"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/task_image_placeholder" />
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/task_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/task_image_placeholder" />
+
+            <CheckBox
+                android:id="@+id/task_is_got"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Задача получена, инструктаж пройден" />
+
+
+            <CheckBox
+                android:id="@+id/shunting_is_began"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Подготовка к маневровым работам начата" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Типа тут будет кнопка для делания фотки завершения подготовки???" />
+
+            <CheckBox
+                android:id="@+id/shunting_is_ready"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Есть готовность к маневровым работам" />
+
+            <CheckBox
+                android:id="@+id/shunting_is_ended"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Маневровые работы окончены" />
+
+            <CheckBox
+                android:id="@+id/viaduct_is_ready"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Эстакада готова к осмотру в/ц" />
+
+            <CheckBox
+                android:id="@+id/vetse_is_viewed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="В/ц осмотрен" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Типа тут будет кнопка для делания фотки акта приемки/передачи???" />
+
+            <CheckBox
+                android:id="@+id/act_is_signed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Подписан акт приемки/передачи" />
+
+            <CheckBox
+                android:id="@+id/rnp_is_connected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Подключение рукава налива продукта завершено" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Типа тут будет форма для отправки емейла???" />
+
+            <CheckBox
+                android:id="@+id/vetse_is_ready_to_naliv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="В/ц готов к наливу" />
+
+            <CheckBox
+                android:id="@+id/naliv_is_started"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Налив в/ц начат" />
+
+            <CheckBox
+                android:id="@+id/rnl_is_deconnected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Отключение рукава налива продукта завершено" />
+
+            <CheckBox
+                android:id="@+id/selection_is_over"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Отбор проб завершен" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Типа тут будет кнопка для делания фотки номеров в/ц???" />
+
+            <CheckBox
+                android:id="@+id/shunting_is_over"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Маневровые работы завершены" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>
