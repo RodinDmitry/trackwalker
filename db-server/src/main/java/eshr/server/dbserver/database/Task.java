@@ -15,33 +15,33 @@ public class Task {
 
     @Id
     @GeneratedValue
-    long id;
+    public long id;
 
-    String name;
-    String description;
-    Date createTime;
-    Date receiveDate;//1
-    Date startDate;
-    Date prepareStartTime;//2
-    ArrayList<Long> prepareImg;//3
-    Date prepareEndTime;//3
-    Date endManeuresTime;//4
-    Date readyWatchTime;//5
-    Date endWatchTime;//6
-    Date acceptTime;//7
-    ArrayList<Long> acceptImg;//7
-    Date endConnectionTime;//8
-    Date readyFillTime;//9
-    Date startFillTime;//10
-    Date endDisconnectionTime;//11
-    Date endProbeTime;//12
-    String numbers;//13
-    Date readyWatchTime2;//14
-    Date acceptTime2;//15
-    ArrayList<Long> acceptImg2;//15
-    ArrayList<Long> prepareImg2;//16
-    Date prepareEndTime2; //16
-    Date endManeuresTime2; //17
-    Date finishTime;
-    Boolean isDeleted;
+    public String name;
+    public String description;
+    public Date createTime;
+    public Date receiveDate;//1
+    public Date startDate;
+    public Date prepareStartTime;//2
+    public ArrayList<Long> prepareImg;//3
+    public Date prepareEndTime;//3
+    public Date endManeuresTime;//4
+    public Date readyWatchTime;//5
+    public Date endWatchTime;//6
+    public Date acceptTime;//7
+    public ArrayList<Long> acceptImg;//7
+    public Date endConnectionTime;//8
+    public Date readyFillTime;//9
+    public Date startFillTime;//10
+    public Date endDisconnectionTime;//11
+    public Date endProbeTime;//12
+    public String numbers;//13
+    public Date readyWatchTime2;//14
+    public Date acceptTime2;//15
+    public ArrayList<Long> acceptImg2;//15
+    public ArrayList<Long> prepareImg2;//16
+    public Date prepareEndTime2; //16
+    public Date endManeuresTime2; //17
+    public Date finishTime;
+    public Boolean isDeleted;
 }
