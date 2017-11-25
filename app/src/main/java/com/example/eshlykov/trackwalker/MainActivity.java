@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import com.example.data_struct.Task;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

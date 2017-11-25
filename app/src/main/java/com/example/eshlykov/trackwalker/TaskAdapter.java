@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.data_struct.Task;
+
 import java.util.ArrayList;
 
 /**
@@ -40,7 +42,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         });
 
         TextView defaultTextView = (TextView) listItemView.findViewById(R.id.start_time);
-        defaultTextView.setText(currentTask.getStartTime());
+        defaultTextView.setText(currentTask.getCreateTime());
 
         TextView russianTextView = (TextView) listItemView.findViewById(R.id.finish_time);
         russianTextView.setText(currentTask.getFinishTime());
