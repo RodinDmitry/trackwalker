@@ -23,28 +23,28 @@ public class Task {
     public Date receiveDate;//1
     public Date startDate;
     public Date prepareStartTime;//2
-    public ArrayList<Uri> prepareImg;//3
-    public ArrayList<Long> prepareImgId;
+    public ArrayList<Uri> prepareImg = new ArrayList<>();//3
+    public ArrayList<Long> prepareImgId = new ArrayList<>();
     public Date prepareEndTime;//3
     public Date endManeuresTime;//4
     public Date readyWatchTime;//5
     public Date endWatchTime;//6
     public Date acceptTime;//7
-    public ArrayList<Uri> acceptImg;//7
-    public ArrayList<Long> acceptImgId;
+    public ArrayList<Uri> acceptImg = new ArrayList<>();//7
+    public ArrayList<Long> acceptImgId = new ArrayList<>();
     public Date endConnectionTime;//8
     public Date readyFillTime;//9
     public Date startFillTime;//10
     public Date endDisconnectionTime;//11
     public Date endProbeTime;//12
-    public ArrayList<Uri> numbersImg;//13
-    public ArrayList<Long> numbersImgId;
+    public ArrayList<Uri> numbersImg = new ArrayList<>();//13
+    public ArrayList<Long> numbersImgId = new ArrayList<>();
     public Date readyWatchTime2;//14
     public Date acceptTime2;//15
-    public ArrayList<Uri> acceptImg2;//15
-    public ArrayList<Long> acceptImgId2;
-    public ArrayList<Uri> prepareImg2;//16
-    public ArrayList<Long> prepareImgId2;
+    public ArrayList<Uri> acceptImg2 = new ArrayList<>();//15
+    public ArrayList<Long> acceptImgId2 = new ArrayList<>();
+    public ArrayList<Uri> prepareImg2 = new ArrayList<>();//16
+    public ArrayList<Long> prepareImgId2 = new ArrayList<>();
     public Date prepareEndTime2; //16
     public Date endManeuresTime2; //17
     public Date finishTime;
