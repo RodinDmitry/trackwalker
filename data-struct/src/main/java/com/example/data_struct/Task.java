@@ -50,7 +50,7 @@ public class Task {
     Boolean isDeleted;
 
     void uploadProgress(){
-        
+        ServerInteracter.getInstance().updateTask(new ServerTask(this));
     }
 
     void uploadPhoto(Uri photo, ServerInteracter.CallbackLike callback) {

@@ -10,6 +10,11 @@ import java.util.Date;
  */
 
 public class ServerTask {
+
+    ServerTask(Task task){
+        
+    }
+
     String Name;
     long id;
     String description;

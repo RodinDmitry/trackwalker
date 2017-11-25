@@ -63,7 +63,7 @@ public class ServerInteracter {
         });
     }
 
-    public void updatePhoto(ServerTask task) {
+    public void updateTask(ServerTask task) {
         try {
             retrofitService.updateTask(task).execute();
         } catch (IOException e) {
