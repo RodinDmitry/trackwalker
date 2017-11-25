@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.example.data_struct.Task;
+
 public class TaskDetailedActivity extends AppCompatActivity {
     TextView tvView;
 
@@ -19,7 +21,7 @@ public class TaskDetailedActivity extends AppCompatActivity {
         tvView = (TextView) findViewById(R.id.task_name);
         tvView.setText(task.getTaskName());
         tvView = (TextView) findViewById(R.id.start_time);
-        tvView.setText(task.getStartTime());
+        tvView.setText(task.getCreateTime());
         tvView = (TextView) findViewById(R.id.finish_time);
         tvView.setText(task.getFinishTime());
         tvView = (TextView) findViewById(R.id.start_time);

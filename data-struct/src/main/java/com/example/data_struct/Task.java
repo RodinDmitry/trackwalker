@@ -1,7 +1,12 @@
 package com.example.data_struct;
 
 import android.net.Uri;
+import android.os.Bundle;
+
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -104,5 +109,56 @@ public class Task {
                 }
             });
         }
+    }
+
+    public Boolean taskIsGot = false;
+    public Boolean shuntingIsBegan = false;
+    public Boolean shuntingIsReady = false;
+    public Boolean shuntingIsEnded = false;
+    public Boolean viaductIsReady = false;
+    public Boolean vetseIsVieved = false;
+    public Boolean actIsSigned = false;
+    public Boolean rnpIsConnected = false;
+    public Boolean vetseIsReadyToNaliv = false;
+    public Boolean nalivIsStarted = false;
+    public Boolean rnlIsDeconnected = false;
+    public Boolean selectionIsOver = false;
+    public Boolean shuntingIsOver = false;
+
+    DateFormat df = new SimpleDateFormat("HH:mm");
+
+    public Bundle getBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putCharArray("taskName", name.toCharArray());
+        bundle.putCharArray("startTime", getCreateTime().toCharArray());
+        bundle.putCharArray("finishTime", getFinishTime().toCharArray());
+        return bundle;
+    }
+
+    public Task(Bundle bundle) {
+        name = new String(bundle.getCharArray("taskName"));
+        try {
+            createTime = df.parse(new String(bundle.getCharArray("createTime")));
+            finishTime = df.parse(new String(bundle.getCharArray("finishTime")));
+        } catch (ParseException e) {
+        }
+    }
+
+    public Task(String _taskName, Date _createTime, Date _finishTime) {
+        name = _taskName;
+        createTime = _createTime;
+        finishTime = _finishTime;
+    }
+
+    public String getTaskName() {
+        return name;
+    }
+
+    public String getCreateTime() {
+        return df.format(createTime);
+    }
+
+    public String getFinishTime() {
+        return df.format(finishTime);
     }
 }
