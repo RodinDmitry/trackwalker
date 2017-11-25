@@ -42,7 +42,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         });
 
         TextView defaultTextView = (TextView) listItemView.findViewById(R.id.start_time);
-        defaultTextView.setText(currentTask.getCreateTime();
+        defaultTextView.setText(currentTask.getCreateTime());
 
         TextView russianTextView = (TextView) listItemView.findViewById(R.id.finish_time);
         russianTextView.setText(currentTask.getFinishTime());
