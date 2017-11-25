@@ -15,7 +15,7 @@ import java.util.Date;
  */
 
 public class Task {
-    String Name;
+    String name;
     long id;
     String description;
     Date createTime;
