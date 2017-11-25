@@ -1,12 +1,7 @@
 package com.example.data_struct;
 
-import android.database.Cursor;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,39 +10,40 @@ import java.util.Date;
  */
 
 public class Task {
-    String name;
-    long id;
-    String description;
-    Date createTime;
-    Date receiveDate;//1
-    Date startDate;
-    Date prepareStartTime;//2
-    ArrayList<Uri> prepareImg;//3
-    ArrayList<Long> prepareImgId;
-    Date prepareEndTime;//3
-    Date endManeuresTime;//4
-    Date readyWatchTime;//5
-    Date endWatchTime;//6
-    Date acceptTime;//7
-    ArrayList<Uri> acceptImg;//7
-    ArrayList<Long> acceptImgId;
-    Date endConnectionTime;//8
-    Date readyFillTime;//9
-    Date startFillTime;//10
-    Date endDisconnectionTime;//11
-    Date endProbeTime;//12
-    ArrayList<Uri> numbersImg;//13
-    ArrayList<Long> numbersImgId;
-    Date readyWatchTime2;//14
-    Date acceptTime2;//15
-    ArrayList<Uri> acceptImg2;//15
-    ArrayList<Long> acceptImgId2;
-    ArrayList<Uri> prepareImg2;//16
-    ArrayList<Long> prepareImgId2;
-    Date prepareEndTime2; //16
-    Date endManeuresTime2; //17
-    Date finishTime;
-    Boolean isDeleted;
+    public String name;
+    public long id;
+    public String operator;
+    public String description;
+    public Date createTime;
+    public Date receiveDate;//1
+    public Date startDate;
+    public Date prepareStartTime;//2
+    public ArrayList<Uri> prepareImg;//3
+    public ArrayList<Long> prepareImgId;
+    public Date prepareEndTime;//3
+    public Date endManeuresTime;//4
+    public Date readyWatchTime;//5
+    public Date endWatchTime;//6
+    public Date acceptTime;//7
+    public ArrayList<Uri> acceptImg;//7
+    public ArrayList<Long> acceptImgId;
+    public Date endConnectionTime;//8
+    public Date readyFillTime;//9
+    public Date startFillTime;//10
+    public Date endDisconnectionTime;//11
+    public Date endProbeTime;//12
+    public ArrayList<Uri> numbersImg;//13
+    public ArrayList<Long> numbersImgId;
+    public Date readyWatchTime2;//14
+    public Date acceptTime2;//15
+    public ArrayList<Uri> acceptImg2;//15
+    public ArrayList<Long> acceptImgId2;
+    public ArrayList<Uri> prepareImg2;//16
+    public ArrayList<Long> prepareImgId2;
+    public Date prepareEndTime2; //16
+    public Date endManeuresTime2; //17
+    public Date finishTime;
+    public Boolean isDeleted;
 
     void uploadProgress(){
         ServerInteracter.getInstance().updateTask(new ServerTask(this));

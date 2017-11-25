@@ -14,6 +14,7 @@ public class ServerTask {
     ServerTask(Task task){
         id = task.id;
         name = task.name;
+        operator = task.operator;
         description = task.description;
         createTime = task.createTime;
         receiveDate = task.receiveDate;
@@ -43,7 +44,7 @@ public class ServerTask {
     }
 
     public long id;
-
+    public String operator;
     public String name;
     public String description;
     public Date createTime;

@@ -18,6 +18,6 @@ public interface ServerApi {
     @POST("/api/v1.1/authenticate")
     Call<Long> uploadImage(@Part MultipartBody.Part filePart);
 
-    @GET("/api/v1/Minicard")
+    @GET("/task/update")
     Call<Void> updateTask(@Query("task") ServerTask task);
 }
