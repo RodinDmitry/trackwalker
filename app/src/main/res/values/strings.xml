@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Trackwalker</string>
+    <string name="title_activity_task_detailed">TaskDetailedActivity</string>
 </resources>
