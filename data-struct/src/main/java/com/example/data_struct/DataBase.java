@@ -85,7 +85,77 @@ public class DataBase {
         contentValues.put(PhotoRows.serverId, serverId);
         contentValues.put(PhotoRows.taskInd, ind);
         contentValues.put(PhotoRows.url, img.toString());
-        db.insert(photoTable, null, contentValues);
+        db.update(photoTable, contentValues, PhotoRows.url + "=" + img.toString(), null);
+    }
+    public void addTask(Task task) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TaskRows.operator, task.operator);
+        contentValues.put(TaskRows.name, task.name) ;
+        contentValues.put(TaskRows.description, task.description);
+        contentValues.put(TaskRows.createTime, task.createTime.getTime());
+        contentValues.put(TaskRows.receiveDate, task.receiveDate.getTime());
+        contentValues.put(TaskRows.startDate, task.startDate.getTime());
+        contentValues.put(TaskRows.prepareStartTime, task.prepareStartTime.getTime()) ;
+        contentValues.put(TaskRows.prepareEndTime, task.prepareEndTime.getTime()) ;
+        contentValues.put(TaskRows.endManeuresTime, task.endManeuresTime.getTime());
+        contentValues.put(TaskRows.readyWatchTime, task.readyWatchTime.getTime());
+        contentValues.put(TaskRows.endWatchTime, task.endWatchTime.getTime()) ;
+        contentValues.put(TaskRows.acceptTime, task.acceptTime.getTime()) ;
+        contentValues.put(TaskRows.endConnectionTime, task.endConnectionTime.getTime());
+        contentValues.put(TaskRows.readyFillTime, task.readyFillTime.getTime()) ;
+        contentValues.put(TaskRows.startFillTime, task.startFillTime.getTime()) ;
+        contentValues.put(TaskRows.endDisconnectionTime, task.endDisconnectionTime.getTime()) ;
+        contentValues.put(TaskRows.endProbeTime,  task.endProbeTime.getTime()) ;
+        contentValues.put(TaskRows.readyWatchTime2, task.readyWatchTime2.getTime());
+        contentValues.put(TaskRows.acceptTime2, task.acceptTime2.getTime()) ;
+        contentValues.put(TaskRows.prepareEndTime2, task.prepareEndTime2.getTime()) ;
+        contentValues.put(TaskRows.endManeuresTime2, task.endManeuresTime2.getTime()) ;
+        contentValues.put(TaskRows.finishTime, task.finishTime.getTime()) ;
+        contentValues.put(TaskRows.isDeleted, task.isDeleted) ;
+        db.insert(taskTable, null, contentValues);
+    }
+
+    public Task getTask(Long id) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String[] select = {TaskRows.ID};
+        Cursor cursor = db.query(taskTable, null, null, null, null, null, null);
+        Task task = new Task();
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                ret.add(new Word(cursor.getString(cursor.getColumnIndex(sourceWord)),
+                        cursor.getString(cursor.getColumnIndex(translatedWord)),
+                        cursor.getInt(cursor.getColumnIndex(sourceLang)), cursor.getInt(cursor.getColumnIndex(destLang))));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TaskRows.operator, task.operator);
+        contentValues.put(TaskRows.name, task.name) ;
+        contentValues.put(TaskRows.description, task.description);
+        contentValues.put(TaskRows.createTime, task.createTime.getTime());
+        contentValues.put(TaskRows.receiveDate, task.receiveDate.getTime());
+        contentValues.put(TaskRows.startDate, task.startDate.getTime());
+        contentValues.put(TaskRows.prepareStartTime, task.prepareStartTime.getTime()) ;
+        contentValues.put(TaskRows.prepareEndTime, task.prepareEndTime.getTime()) ;
+        contentValues.put(TaskRows.endManeuresTime, task.endManeuresTime.getTime());
+        contentValues.put(TaskRows.readyWatchTime, task.readyWatchTime.getTime());
+        contentValues.put(TaskRows.endWatchTime, task.endWatchTime.getTime()) ;
+        contentValues.put(TaskRows.acceptTime, task.acceptTime.getTime()) ;
+        contentValues.put(TaskRows.endConnectionTime, task.endConnectionTime.getTime());
+        contentValues.put(TaskRows.readyFillTime, task.readyFillTime.getTime()) ;
+        contentValues.put(TaskRows.startFillTime, task.startFillTime.getTime()) ;
+        contentValues.put(TaskRows.endDisconnectionTime, task.endDisconnectionTime.getTime()) ;
+        contentValues.put(TaskRows.endProbeTime,  task.endProbeTime.getTime()) ;
+        contentValues.put(TaskRows.readyWatchTime2, task.readyWatchTime2.getTime());
+        contentValues.put(TaskRows.acceptTime2, task.acceptTime2.getTime()) ;
+        contentValues.put(TaskRows.prepareEndTime2, task.prepareEndTime2.getTime()) ;
+        contentValues.put(TaskRows.endManeuresTime2, task.endManeuresTime2.getTime()) ;
+        contentValues.put(TaskRows.finishTime, task.finishTime.getTime()) ;
+        contentValues.put(TaskRows.isDeleted, task.isDeleted) ;
+        db.insert(taskTable, null, contentValues);
+        return null;
     }
     /*
     public void addTask(Task task) {
