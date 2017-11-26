@@ -80,7 +80,7 @@ public class ServerInteracter {
         });
     }
 
-    public void updateTask(ServerTask task) {
+    public void updateTask(ServerTask task, final ListCallback callback) {
         Call<Long> call = retrofitService.updateTask(task);
         //Log.d("retrofit", call.request().body().toString());
         call.enqueue(new Callback<Long>() {
@@ -89,6 +89,7 @@ public class ServerInteracter {
                 if (!response.isSuccessful()) {
                     Log.d("retrofit", "not succ " + response.code()+ ' ' + response.body());
                 } else {
+                    callback.proceedTask(response.body());
                     Log.d("retrofit", response.body().toString());
                 }
             }
@@ -132,12 +133,13 @@ public class ServerInteracter {
         call.enqueue(new Callback<ServerTask>() {
             @Override
             public void onResponse(Call<ServerTask> call, Response<ServerTask> response) {
+                Log.d("retrofit", "proceeding");
                 callback.proceedTask(new Task(response.body()));
             }
 
             @Override
             public void onFailure(Call<ServerTask> call, Throwable t) {
-
+                Log.d("retrofit", "failure " + t);
             }
         });
     }

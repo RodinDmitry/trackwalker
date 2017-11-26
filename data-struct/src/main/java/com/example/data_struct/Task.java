@@ -53,7 +53,7 @@ public class Task {
     public Date prepareEndTime2; //16
     public Date endManeuresTime2; //17
     public Date finishTime = new Date();
-    public Boolean isDeleted;
+    public Boolean isDeleted = false;
 
     Task(ServerTask task) {
         name = task.name;
@@ -90,8 +90,15 @@ public class Task {
     }
 
 
-    public void uploadProgress(){
-        ServerInteracter.getInstance().updateTask(new ServerTask(this));
+    public void uploadProgress(final Context context){
+        ServerInteracter.getInstance().updateTask(new ServerTask(this), new ServerInteracter.ListCallback() {
+            @Override
+            public void proceedTask(Long tid) {
+                Task.this.id = tid;
+                DataBase.getInstance(context).updateTask(Task.this);
+            }
+        });
+
     }
 
     public String getPath(Uri uri, Context context) {

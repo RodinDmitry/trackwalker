@@ -45,14 +45,16 @@ public class MainActivity extends AppCompatActivity {
                 if (!DataBase.getInstance(MainActivity.this.getBaseContext()).isTaskIn(tid)) {
                     ServerInteracter.getInstance().getTask(tid, new ServerInteracter.OneCallback() {
                         @Override
-                        public void proceedTask(Task task) {
+                        public void proceedTask(final Task task) {
+                            Log.d("Update", "updated");
                             DataBase.getInstance(MainActivity.this.getBaseContext()).addTask(task);
                             ArrayList<Task> tempTasks = new ArrayList<Task>();
                             tempTasks.add(task);
-                            //tempTasks.addAll(tasks);
-                            //tasks = tempTasks;
+                            tempTasks.addAll(tasks);
+                            tasks = tempTasks;
                             itemsAdapter.getData().clear();
-                            itemsAdapter.getData().addAll(tempTasks);
+                            itemsAdapter.notifyDataSetInvalidated();
+                            itemsAdapter.getData().addAll(tasks);
                             itemsAdapter.notifyDataSetChanged();
                         }
                     });

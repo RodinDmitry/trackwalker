@@ -75,7 +75,7 @@ public class TaskAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, TaskDetailedActivity.class);
                 Log.d("Diction", "intenting");
-                intent.putExtra("task", currentTask.getBundle());
+                intent.putExtra("task", currentTask.id);
                 mContext.startActivity(intent);
             }
         });
