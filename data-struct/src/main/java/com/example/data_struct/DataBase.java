@@ -231,7 +231,7 @@ public class DataBase {
         return task;
     }
 
-    ArrayList<Task> getAll() {
+    public ArrayList<Task> getAll() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(taskTable, null, null, null, null, null, null);
         ArrayList<Task> ret = new ArrayList<>();
@@ -243,6 +243,20 @@ public class DataBase {
         }
         cursor.close();
         return ret;
+    }
+
+    public Boolean isTaskIn(long tid) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        String[] columns = {TaskRows.ID};
+        String selection = TaskRows.ID + " =" + tid;
+        Cursor cursor = db.query(taskTable, columns, selection, null, null, null, null);
+        if (cursor.getCount() == 1) {
+            cursor.close();
+            return Boolean.TRUE;
+        } else {
+            cursor.close();
+            return Boolean.FALSE;
+        }
     }
 
     /*
@@ -342,7 +356,7 @@ public class DataBase {
             TaskRows.isDeleted + " integer" +
                     ");");
 
-            db.execSQL("create table " + taskTable + " ("
+            db.execSQL("create table " + photoTable + " ("
                     + PhotoRows.url + " text primary key,"+
                     PhotoRows.serverId + " integer, " +
                     PhotoRows.taskInd + " integer, " +

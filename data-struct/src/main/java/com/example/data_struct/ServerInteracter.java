@@ -3,10 +3,12 @@ package com.example.data_struct;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayDeque;
+import java.util.List;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -67,12 +69,13 @@ public class ServerInteracter {
         retrofitService.uploadImage(filePart).enqueue(new Callback<Long>() {
             @Override
             public void onResponse(Call<Long> call, Response<Long> response) {
+                Log.d("retrofit", "photo id" + response.body());
                 callbackLike.onResponse(response.body());
             }
 
             @Override
             public void onFailure(Call<Long> call, Throwable t) {
-
+                Log.d("retrofit", "failure " + t);
             }
         });
     }
@@ -92,6 +95,48 @@ public class ServerInteracter {
 
             @Override
             public void onFailure(Call<Long> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public interface ListCallback {
+        void proceedTask(Long tid);
+    }
+
+    public void getMyTasks(String name, final ListCallback callback) {
+        Call<List<Long>> call = retrofitService.getMyTasks(name);
+        //Log.d("retrofit", call.request().body().toString());
+        call.enqueue(new Callback<List<Long>>() {
+            @Override
+            public void onResponse(Call<List<Long>> call, Response<List<Long>> response) {
+                for(Long tid: response.body()) {
+                    callback.proceedTask(tid);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Long>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public interface OneCallback {
+        void proceedTask(Task task);
+    }
+
+    public void getTask(Long id, final OneCallback callback) {
+        Call<ServerTask> call = retrofitService.getTask(id);
+        //Log.d("retrofit", call.request().body().toString());
+        call.enqueue(new Callback<ServerTask>() {
+            @Override
+            public void onResponse(Call<ServerTask> call, Response<ServerTask> response) {
+                callback.proceedTask(new Task(response.body()));
+            }
+
+            @Override
+            public void onFailure(Call<ServerTask> call, Throwable t) {
 
             }
         });

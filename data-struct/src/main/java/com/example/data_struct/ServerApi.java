@@ -1,5 +1,7 @@
 package com.example.data_struct;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -25,4 +27,10 @@ public interface ServerApi {
 
     @POST("api/task/update/")
     Call<Long> updateTask(@Body ServerTask task);
+
+    @GET("api/worker/tasks")
+    Call<List<Long>> getMyTasks(@Query("name") String operator);
+
+    @GET("api/task/get")
+    Call<ServerTask> getTask(@Query("id") Long id);
 }

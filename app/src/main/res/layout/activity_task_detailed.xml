@@ -73,6 +73,18 @@
                 android:layout_height="wrap_content"
                 android:text="Типа тут будет кнопка для делания фотки завершения подготовки???" />
 
+            <ImageView
+                android:id="@+id/prepare_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_menu_add" />
+
+            <Button
+                android:id="@+id/prepare_photo_add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
             <CheckBox
                 android:id="@+id/shunting_is_ready"
                 android:layout_width="match_parent"
