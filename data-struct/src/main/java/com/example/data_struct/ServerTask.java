@@ -2,6 +2,8 @@ package com.example.data_struct;
 
 import android.net.Uri;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -43,10 +45,12 @@ public class ServerTask {
         isDeleted = task.isDeleted;
     }
 
+
     public long id;
     public String operator;
     public String name;
     public String description;
+    @SerializedName("createDate")
     public Date createTime;
     public Date receiveDate;//1
     public Date startDate;

@@ -121,41 +121,31 @@ public class DataBase {
         String[] select = {TaskRows.ID};
         Cursor cursor = db.query(taskTable, null, null, null, null, null, null);
         Task task = new Task();
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                ret.add(new Word(cursor.getString(cursor.getColumnIndex(sourceWord)),
-                        cursor.getString(cursor.getColumnIndex(translatedWord)),
-                        cursor.getInt(cursor.getColumnIndex(sourceLang)), cursor.getInt(cursor.getColumnIndex(destLang))));
-                cursor.moveToNext();
-            }
-        }
+        task.operator = cursor.getString(cursor.getColumnIndex(TaskRows.operator));
+        task.name = cursor.getString(cursor.getColumnIndex(TaskRows.name));
+        task.description = cursor.getString(cursor.getColumnIndex(TaskRows.description));
+        task.createTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.createTime)));
+        task.receiveDate = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.receiveDate)));
+        task.startDate = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.startDate)));
+        task.prepareStartTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.prepareStartTime)));
+        task.endManeuresTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.endManeuresTime)));
+        task.readyWatchTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.readyWatchTime)));
+        task.endWatchTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.endWatchTime)));
+        task.acceptTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.acceptTime)));
+        task.endConnectionTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.endConnectionTime)));
+        task.readyFillTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.readyFillTime)));
+        task.startFillTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.startFillTime)));
+        task.endDisconnectionTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.endDisconnectionTime)));
+        task.endProbeTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.endProbeTime)));
+        task.readyWatchTime2 = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.readyWatchTime2)));
+        task.acceptTime2 = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.acceptTime2)));
+        task.prepareEndTime2 = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.prepareEndTime2)));
+        task.endManeuresTime2 = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.endManeuresTime2)));
+        task.finishTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.finishTime)));
+        int prebool = cursor.getInt(cursor.getColumnIndex(TaskRows.isDeleted));
+        task.isDeleted = (prebool > 0) ? true : false;
         cursor.close();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(TaskRows.operator, task.operator);
-        contentValues.put(TaskRows.name, task.name) ;
-        contentValues.put(TaskRows.description, task.description);
-        contentValues.put(TaskRows.createTime, task.createTime.getTime());
-        contentValues.put(TaskRows.receiveDate, task.receiveDate.getTime());
-        contentValues.put(TaskRows.startDate, task.startDate.getTime());
-        contentValues.put(TaskRows.prepareStartTime, task.prepareStartTime.getTime()) ;
-        contentValues.put(TaskRows.prepareEndTime, task.prepareEndTime.getTime()) ;
-        contentValues.put(TaskRows.endManeuresTime, task.endManeuresTime.getTime());
-        contentValues.put(TaskRows.readyWatchTime, task.readyWatchTime.getTime());
-        contentValues.put(TaskRows.endWatchTime, task.endWatchTime.getTime()) ;
-        contentValues.put(TaskRows.acceptTime, task.acceptTime.getTime()) ;
-        contentValues.put(TaskRows.endConnectionTime, task.endConnectionTime.getTime());
-        contentValues.put(TaskRows.readyFillTime, task.readyFillTime.getTime()) ;
-        contentValues.put(TaskRows.startFillTime, task.startFillTime.getTime()) ;
-        contentValues.put(TaskRows.endDisconnectionTime, task.endDisconnectionTime.getTime()) ;
-        contentValues.put(TaskRows.endProbeTime,  task.endProbeTime.getTime()) ;
-        contentValues.put(TaskRows.readyWatchTime2, task.readyWatchTime2.getTime());
-        contentValues.put(TaskRows.acceptTime2, task.acceptTime2.getTime()) ;
-        contentValues.put(TaskRows.prepareEndTime2, task.prepareEndTime2.getTime()) ;
-        contentValues.put(TaskRows.endManeuresTime2, task.endManeuresTime2.getTime()) ;
-        contentValues.put(TaskRows.finishTime, task.finishTime.getTime()) ;
-        contentValues.put(TaskRows.isDeleted, task.isDeleted) ;
-        db.insert(taskTable, null, contentValues);
-        return null;
+        return task;
     }
     /*
     public void addTask(Task task) {

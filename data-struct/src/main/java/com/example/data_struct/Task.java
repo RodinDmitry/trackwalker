@@ -144,6 +144,8 @@ public class Task {
         }
     }
 
+    public Task(){};
+
     public Task(String _taskName, Date _createTime, Date _finishTime) {
         name = _taskName;
         createTime = _createTime;
