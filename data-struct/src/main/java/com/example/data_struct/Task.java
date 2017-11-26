@@ -1,12 +1,17 @@
 package com.example.data_struct;
 
+import android.app.Application;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.text.StringCharacterIterator;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,7 +21,7 @@ import java.util.Date;
 
 public class Task {
     public String name = "";
-    public long id;
+    public long id = 1;
     public String operator;
     public String description;
     public Date createTime = new Date();
@@ -50,54 +55,101 @@ public class Task {
     public Date finishTime = new Date();
     public Boolean isDeleted;
 
-    void uploadProgress(){
+    Task(ServerTask task) {
+        name = task.name;
+        id = task.id;
+        operator = task.operator;
+        description = task.description;
+        createTime = task.createTime;
+    }
+
+    public void addNumberPhoto(Uri img, Context context) {
+        numbersImg.add(img);
+        int ind = numbersImg.size();
+        uploadPhotos(context);
+        if (numbersImgId.size() > ind)
+            DataBase.getInstance(context).addPhoto(this, "numbersImg", numbersImgId.get(ind), ind, img);
+        else
+            DataBase.getInstance(context).addPhoto(this, "numbersImg", null, ind, img);
+    }
+
+    public void addPreparePhoto(Uri img, Context context) {
+        prepareImg.add(img);
+        final int ind = prepareImg.size() - 1;
+
+        uploadPhoto(prepareImg.get(ind), new ServerInteracter.CallbackLike() {
+            @Override
+            public void onResponse(Long id) {
+                prepareImgId.add(ind, id);
+            }
+        }, context);
+        if (prepareImgId.size() > ind)
+            DataBase.getInstance(context).addPhoto(this, "prepareImg", prepareImgId.get(ind), ind, img);
+        else
+            DataBase.getInstance(context).addPhoto(this, "prepareImg", null, ind, img);
+    }
+
+
+    public void uploadProgress(){
         ServerInteracter.getInstance().updateTask(new ServerTask(this));
     }
 
-    void uploadPhoto(Uri photo, ServerInteracter.CallbackLike callback) {
-        ServerInteracter.getInstance().uploadPhoto(new File(photo.getPath()), callback);
+    public String getPath(Uri uri, Context context) {
+        String[] projection = {MediaStore.MediaColumns.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
+        int column_index = cursor
+                .getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+        cursor.moveToFirst();
+        String imagePath = cursor.getString(column_index);
+
+        return cursor.getString(column_index);
     }
 
-    void uploadPhotos(){
-        while (prepareImg.size() > prepareImgId.size()) {
+    void uploadPhoto(Uri photo, ServerInteracter.CallbackLike callback, Context context) {
+        ServerInteracter.getInstance().uploadPhoto(new File(getPath(photo, context)), callback);
+    }
+
+    public void uploadPhotos(Context context){
+        int iter = prepareImgId.size();
+        while (prepareImg.size() > iter) {
             final int pid = prepareImgId.size();
             uploadPhoto(prepareImg.get(pid), new ServerInteracter.CallbackLike() {
                 @Override
                 public void onResponse(Long id) {
                     prepareImgId.add(pid, id);
-                    uploadPhotos();
                 }
-            });
+            }, context);
+            iter++;
         }
+        iter = prepareImgId2.size();
         while (prepareImg2.size() > prepareImgId2.size()) {
             final int pid = prepareImgId2.size();
             uploadPhoto(prepareImg2.get(pid), new ServerInteracter.CallbackLike() {
                 @Override
                 public void onResponse(Long id) {
                     prepareImgId2.add(pid, id);
-                    uploadPhotos();
                 }
-            });
+            }, context);
         }
+        iter = acceptImgId.size();
         while (acceptImg.size() > acceptImgId.size()) {
             final int pid = acceptImgId.size();
             uploadPhoto(acceptImg.get(pid), new ServerInteracter.CallbackLike() {
                 @Override
                 public void onResponse(Long id) {
                     acceptImgId.add(pid, id);
-                    uploadPhotos();
                 }
-            });
+            }, context);
         }
+        iter = acceptImgId.size();
         while (acceptImg2.size() > acceptImgId2.size()) {
             final int pid = acceptImgId2.size();
             uploadPhoto(acceptImg2.get(pid), new ServerInteracter.CallbackLike() {
                 @Override
                 public void onResponse(Long id) {
                     acceptImgId2.add(pid, id);
-                    uploadPhotos();
                 }
-            });
+            }, context);
         }
         while (numbersImg.size() > numbersImgId.size()) {
             final int pid = numbersImgId.size();
@@ -105,25 +157,10 @@ public class Task {
                 @Override
                 public void onResponse(Long id) {
                     numbersImgId.add(pid, id);
-                    uploadPhotos();
                 }
-            });
+            }, context);
         }
     }
-
-    public Boolean taskIsGot = false;
-    public Boolean shuntingIsBegan = false;
-    public Boolean shuntingIsReady = false;
-    public Boolean shuntingIsEnded = false;
-    public Boolean viaductIsReady = false;
-    public Boolean vetseIsVieved = false;
-    public Boolean actIsSigned = false;
-    public Boolean rnpIsConnected = false;
-    public Boolean vetseIsReadyToNaliv = false;
-    public Boolean nalivIsStarted = false;
-    public Boolean rnlIsDeconnected = false;
-    public Boolean selectionIsOver = false;
-    public Boolean shuntingIsOver = false;
 
     DateFormat df = new SimpleDateFormat("HH:mm");
 
@@ -131,7 +168,6 @@ public class Task {
         Bundle bundle = new Bundle();
         bundle.putCharArray("taskName", name.toCharArray());
         bundle.putCharArray("createTime", getCreateTime().toCharArray());
-        bundle.putCharArray("finishTime", getFinishTime().toCharArray());
         return bundle;
     }
 
@@ -139,15 +175,16 @@ public class Task {
         name = new String(bundle.getCharArray("taskName"));
         try {
             createTime = df.parse(new String(bundle.getCharArray("createTime")));
-            finishTime = df.parse(new String(bundle.getCharArray("finishTime")));
         } catch (ParseException e) {
         }
     }
 
-    public Task(String _taskName, Date _createTime, Date _finishTime) {
+    public Task(){};
+
+    public Task(String _taskName, Date _createTime) {
+
         name = _taskName;
         createTime = _createTime;
-        finishTime = _finishTime;
     }
 
     public String getTaskName() {
