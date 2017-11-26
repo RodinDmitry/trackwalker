@@ -6,6 +6,7 @@
     </permission>
     <uses-permission android:name="com.example.eshlykov.trackwalker.permission.C2D_MESSAGE">
     </uses-permission>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -17,28 +18,32 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".RegistrationService" android:exported="false">
-        </service>
+
+        <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"></action>
+                <category android:name="com.example.gcm"></category>
+            </intent-filter>
+        </receiver>
+
         <service android:name=".TokenRefreshListenerService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"></action>
             </intent-filter>
         </service>
+
+        <service android:name=".RegistrationService" android:exported="false">
+        </service>
+
         <service android:name=".NotificationsListenerService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"></action>
             </intent-filter>
         </service>
-        <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"></action>
-                <category android:name="com.example.eshlykov.trackwalker"></category>
-            </intent-filter>
-        </receiver>
+
     </application>
 
 </manifest>
