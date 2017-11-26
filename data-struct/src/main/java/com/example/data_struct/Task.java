@@ -131,7 +131,6 @@ public class Task {
         Bundle bundle = new Bundle();
         bundle.putCharArray("taskName", name.toCharArray());
         bundle.putCharArray("createTime", getCreateTime().toCharArray());
-        bundle.putCharArray("finishTime", getFinishTime().toCharArray());
         return bundle;
     }
 
@@ -139,15 +138,13 @@ public class Task {
         name = new String(bundle.getCharArray("taskName"));
         try {
             createTime = df.parse(new String(bundle.getCharArray("createTime")));
-            finishTime = df.parse(new String(bundle.getCharArray("finishTime")));
         } catch (ParseException e) {
         }
     }
 
-    public Task(String _taskName, Date _createTime, Date _finishTime) {
+    public Task(String _taskName, Date _createTime) {
         name = _taskName;
         createTime = _createTime;
-        finishTime = _finishTime;
     }
 
     public String getTaskName() {

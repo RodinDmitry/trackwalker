@@ -44,9 +44,6 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         TextView defaultTextView = (TextView) listItemView.findViewById(R.id.start_time);
         defaultTextView.setText(currentTask.getCreateTime());
 
-        TextView russianTextView = (TextView) listItemView.findViewById(R.id.finish_time);
-        russianTextView.setText(currentTask.getFinishTime());
-
         // Вроде, будет нужно, если захотим удалять.
 //        Button deleteButton = (Button) listItemView.findViewById(R.id.delete_task);
 //        deleteButton.setOnClickListener(new View.OnClickListener() {
