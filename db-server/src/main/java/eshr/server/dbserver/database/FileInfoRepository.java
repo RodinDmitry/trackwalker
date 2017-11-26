@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface TaskRepository extends CrudRepository<Task, Long> {
+public interface FileInfoRepository extends CrudRepository<FileInfo, Long> {
 
 }
