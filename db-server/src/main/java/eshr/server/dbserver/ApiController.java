@@ -7,7 +7,9 @@ import eshr.server.dbserver.database.Worker;
 import eshr.server.dbserver.database.WorkerRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -58,6 +60,19 @@ public class ApiController {
         return task.id;
     }
 
+    @GetMapping("/task/operator")
+    public @ResponseBody ArrayList<Long> findAllOperatedTasks(
+            @RequestParam("operator") String operator) {
+        Iterable<Task> taskList = getAllTasks();
+        ArrayList<Long> resultList = new ArrayList<>();
+        for (Task task : taskList) {
+            if(task.operator.equals(operator)) {
+                resultList.add(task.id);
+            }
+        }
+        return resultList;
+    }
+
     @RequestMapping(value = "/task/update", method = RequestMethod.POST)
     public Long updateTask(@RequestBody String taskJSON) {
         Gson gson  = new Gson();
@@ -65,36 +80,6 @@ public class ApiController {
         taskRepository.delete(task.id);
         taskRepository.save(task);
         return task.id;
-        /*taskRepository.update(task.acceptImg,
-                task.acceptImg2,
-                task.acceptTime,
-                task.acceptTime2,
-                task.createTime,
-                task.description,
-                task.endConnectionTime,
-                task.endDisconnectionTime,
-                task.endManeuresTime,
-                task.endManeuresTime2,
-                task.endProbeTime,
-                task.endWatchTime,
-                task.finishTime,
-                task.isDeleted,
-                task.name,
-                task.numbers,
-                task.operator,
-                task.prepareEndTime,
-                task.prepareEndTime2,
-                task.prepareImg,
-                task.prepareImg2,
-                task.prepareStartTime,
-                task.readyFillTime,
-                task.readyWatchTime,
-                task.readyWatchTime2,
-                task.receiveDate,
-                task.startDate,
-                task.startFillTime,
-                task.id);*/
-        //return task.id;
     }
 
     @RequestMapping(value = "/task/update/operator", method = RequestMethod.POST)
