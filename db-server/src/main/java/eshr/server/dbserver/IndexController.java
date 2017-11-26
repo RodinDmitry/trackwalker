@@ -17,11 +17,11 @@ public class IndexController {
         this.taskRepository = taskRepository;
     }
 
-    @GetMapping("/")
+    /*@GetMapping("/")
     public ModelAndView index() {
         Map<String, String> model = new HashMap<>();
         model.put("name", "Dmitry");
         return new ModelAndView("index", model);
     }
-
+    */
 }
