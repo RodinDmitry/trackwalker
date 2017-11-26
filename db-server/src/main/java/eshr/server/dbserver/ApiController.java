@@ -60,9 +60,9 @@ public class ApiController {
         return task.id;
     }
 
-    @GetMapping("/task/operator")
+    @GetMapping("/worker/tasks")
     public @ResponseBody ArrayList<Long> findAllOperatedTasks(
-            @RequestParam("operator") String operator) {
+            @RequestParam("name") String operator) {
         Iterable<Task> taskList = getAllTasks();
         ArrayList<Long> resultList = new ArrayList<>();
         for (Task task : taskList) {

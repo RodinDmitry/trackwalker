@@ -36,8 +36,13 @@ public class FileUploadController {
     }
 
     @GetMapping("/get/file")
-    public FileInfo getFileName(@RequestParam("id") Long id) {
+    public @ResponseBody FileInfo getFileName(@RequestParam("id") Long id) {
         return fileInfoRepository.findOne(id);
+    }
+
+    @GetMapping("/get/file/all")
+    public @ResponseBody Iterable<FileInfo> getAllFiles() {
+        return fileInfoRepository.findAll();
     }
 
     @GetMapping("/")
