@@ -47,15 +47,13 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void proceedTask(Task task) {
                             DataBase.getInstance(MainActivity.this.getBaseContext()).addTask(task);
-                            tasks.add(task);
                             ArrayList<Task> tempTasks = new ArrayList<Task>();
                             tempTasks.add(task);
-                            tempTasks.addAll(tasks);
-                            tasks = tempTasks;
-                            itemsAdapter.clear();
-                            itemsAdapter.addAll(tasks);
+                            //tempTasks.addAll(tasks);
+                            //tasks = tempTasks;
+                            itemsAdapter.getData().clear();
+                            itemsAdapter.getData().addAll(tempTasks);
                             itemsAdapter.notifyDataSetChanged();
-                            listView.invalidateViews();
                         }
                     });
                 }
