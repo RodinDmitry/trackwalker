@@ -49,6 +49,7 @@ public class ApiController {
                                       @RequestParam("name") String name,
                                       @RequestParam("description") String description) {
         Task task = new Task();
+        task.id = taskRepository.count() + 1;
         task.name = name;
         task.operator = operator;
         task.description = description;
@@ -58,12 +59,42 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/task/update", method = RequestMethod.POST)
-    public String updateTask(@RequestBody String taskJSON) {
-        //Gson gson  = new Gson();
-        //Task task = gson.fromJson(taskJSON,Task.class);
-        //taskRepository.delete(task.id);
-        //taskRepository.save(task);
-        return taskJSON;
+    public Long updateTask(@RequestBody String taskJSON) {
+        Gson gson  = new Gson();
+        Task task = gson.fromJson(taskJSON,Task.class);
+        taskRepository.delete(task.id);
+        taskRepository.save(task);
+        return task.id;
+        /*taskRepository.update(task.acceptImg,
+                task.acceptImg2,
+                task.acceptTime,
+                task.acceptTime2,
+                task.createTime,
+                task.description,
+                task.endConnectionTime,
+                task.endDisconnectionTime,
+                task.endManeuresTime,
+                task.endManeuresTime2,
+                task.endProbeTime,
+                task.endWatchTime,
+                task.finishTime,
+                task.isDeleted,
+                task.name,
+                task.numbers,
+                task.operator,
+                task.prepareEndTime,
+                task.prepareEndTime2,
+                task.prepareImg,
+                task.prepareImg2,
+                task.prepareStartTime,
+                task.readyFillTime,
+                task.readyWatchTime,
+                task.readyWatchTime2,
+                task.receiveDate,
+                task.startDate,
+                task.startFillTime,
+                task.id);*/
+        //return task.id;
     }
 
     @RequestMapping(value = "/task/update/operator", method = RequestMethod.POST)
