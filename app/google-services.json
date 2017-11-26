@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1095032025522",
+    "project_id": "firebase-trackwalker"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1095032025522:android:bb03ff2aeccb6160",
+        "android_client_info": {
+          "package_name": "com.example.eshlykov.trackwalker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1095032025522-4pt1adnn2ug7jivkjt80qq6aqps6giqa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBAuorrYnxP00363KATYNMp8Xo8mKWFuY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
