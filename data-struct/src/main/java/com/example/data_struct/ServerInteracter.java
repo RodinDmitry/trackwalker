@@ -2,6 +2,8 @@ package com.example.data_struct;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayDeque;
@@ -12,6 +14,8 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,12 +30,22 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class ServerInteracter {
     private static ServerInteracter instance;
     private ServerApi retrofitService;
-    private String token;
 
     private ServerInteracter() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+
         Retrofit retrofitToken = new Retrofit.Builder()
-                .baseUrl("https://developers.lingvolive.com")
-                .addConverterFactory(ScalarsConverterFactory.create())
+                .baseUrl("http://10.55.167.250:8080")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build())
                 .build();
         retrofitService = retrofitToken.create(ServerApi.class);
     }
@@ -64,10 +78,22 @@ public class ServerInteracter {
     }
 
     public void updateTask(ServerTask task) {
-        try {
-            retrofitService.updateTask(task).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Call<Long> call = retrofitService.updateTask(task);
+        //Log.d("retrofit", call.request().body().toString());
+        call.enqueue(new Callback<Long>() {
+            @Override
+            public void onResponse(Call<Long> call, Response<Long> response) {
+                if (!response.isSuccessful()) {
+                    Log.d("retrofit", "not succ " + response.code()+ ' ' + response.body());
+                } else {
+                    Log.d("retrofit", response.body().toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Long> call, Throwable t) {
+
+            }
+        });
     }
 }

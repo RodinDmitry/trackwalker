@@ -1,5 +1,6 @@
 package com.example.data_struct;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -50,7 +51,28 @@ public class Task {
     public Date finishTime = new Date();
     public Boolean isDeleted;
 
-    void uploadProgress(){
+    public void addNumberPhoto(Uri img, Context context) {
+        numbersImg.add(img);
+        int ind = numbersImg.size();
+        uploadPhotos();
+        if (numbersImgId.size() > ind)
+            DataBase.getInstance(context).addPhoto(this, "numbersImg", numbersImgId.get(ind), ind, img);
+        else
+            DataBase.getInstance(context).addPhoto(this, "numbersImg", null, ind, img);
+    }
+
+    public void addPreparePhoto(Uri img, Context context) {
+        prepareImg.add(img);
+        int ind = prepareImg.size();
+        uploadPhotos();
+        if (prepareImgId.size() > ind)
+            DataBase.getInstance(context).addPhoto(this, "prepareImg", prepareImgId.get(ind), ind, img);
+        else
+            DataBase.getInstance(context).addPhoto(this, "prepareImg", null, ind, img);
+    }
+
+
+    public void uploadProgress(){
         ServerInteracter.getInstance().updateTask(new ServerTask(this));
     }
 
@@ -58,14 +80,13 @@ public class Task {
         ServerInteracter.getInstance().uploadPhoto(new File(photo.getPath()), callback);
     }
 
-    void uploadPhotos(){
+    public void uploadPhotos(){
         while (prepareImg.size() > prepareImgId.size()) {
             final int pid = prepareImgId.size();
             uploadPhoto(prepareImg.get(pid), new ServerInteracter.CallbackLike() {
                 @Override
                 public void onResponse(Long id) {
                     prepareImgId.add(pid, id);
-                    uploadPhotos();
                 }
             });
         }
@@ -75,7 +96,6 @@ public class Task {
                 @Override
                 public void onResponse(Long id) {
                     prepareImgId2.add(pid, id);
-                    uploadPhotos();
                 }
             });
         }
@@ -85,7 +105,6 @@ public class Task {
                 @Override
                 public void onResponse(Long id) {
                     acceptImgId.add(pid, id);
-                    uploadPhotos();
                 }
             });
         }
@@ -95,7 +114,6 @@ public class Task {
                 @Override
                 public void onResponse(Long id) {
                     acceptImgId2.add(pid, id);
-                    uploadPhotos();
                 }
             });
         }
@@ -105,25 +123,10 @@ public class Task {
                 @Override
                 public void onResponse(Long id) {
                     numbersImgId.add(pid, id);
-                    uploadPhotos();
                 }
             });
         }
     }
-
-    public Boolean taskIsGot = false;
-    public Boolean shuntingIsBegan = false;
-    public Boolean shuntingIsReady = false;
-    public Boolean shuntingIsEnded = false;
-    public Boolean viaductIsReady = false;
-    public Boolean vetseIsVieved = false;
-    public Boolean actIsSigned = false;
-    public Boolean rnpIsConnected = false;
-    public Boolean vetseIsReadyToNaliv = false;
-    public Boolean nalivIsStarted = false;
-    public Boolean rnlIsDeconnected = false;
-    public Boolean selectionIsOver = false;
-    public Boolean shuntingIsOver = false;
 
     DateFormat df = new SimpleDateFormat("HH:mm");
 

@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -73,7 +74,7 @@ public class DataBase {
         contentValues.put(PhotoRows.field, field);
         contentValues.put(PhotoRows.serverId, serverId);
         contentValues.put(PhotoRows.taskInd, ind);
-        contentValues.put(PhotoRows.url, img.toString());
+        contentValues.put(PhotoRows.url, img.getPath());
         db.insert(photoTable, null, contentValues);
     }
 
@@ -84,7 +85,7 @@ public class DataBase {
         contentValues.put(PhotoRows.field, field);
         contentValues.put(PhotoRows.serverId, serverId);
         contentValues.put(PhotoRows.taskInd, ind);
-        contentValues.put(PhotoRows.url, img.toString());
+        contentValues.put(PhotoRows.url, img.getPath());
         db.update(photoTable, contentValues, PhotoRows.url + "=" + img.toString(), null);
     }
     public void addTask(Task task) {
@@ -116,10 +117,53 @@ public class DataBase {
         db.insert(taskTable, null, contentValues);
     }
 
+    public void updateTask(Task task) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TaskRows.operator, task.operator);
+        contentValues.put(TaskRows.name, task.name) ;
+        contentValues.put(TaskRows.description, task.description);
+        contentValues.put(TaskRows.createTime, task.createTime.getTime());
+        contentValues.put(TaskRows.receiveDate, task.receiveDate.getTime());
+        contentValues.put(TaskRows.startDate, task.startDate.getTime());
+        contentValues.put(TaskRows.prepareStartTime, task.prepareStartTime.getTime()) ;
+        contentValues.put(TaskRows.prepareEndTime, task.prepareEndTime.getTime()) ;
+        contentValues.put(TaskRows.endManeuresTime, task.endManeuresTime.getTime());
+        contentValues.put(TaskRows.readyWatchTime, task.readyWatchTime.getTime());
+        contentValues.put(TaskRows.endWatchTime, task.endWatchTime.getTime()) ;
+        contentValues.put(TaskRows.acceptTime, task.acceptTime.getTime()) ;
+        contentValues.put(TaskRows.endConnectionTime, task.endConnectionTime.getTime());
+        contentValues.put(TaskRows.readyFillTime, task.readyFillTime.getTime()) ;
+        contentValues.put(TaskRows.startFillTime, task.startFillTime.getTime()) ;
+        contentValues.put(TaskRows.endDisconnectionTime, task.endDisconnectionTime.getTime()) ;
+        contentValues.put(TaskRows.endProbeTime,  task.endProbeTime.getTime()) ;
+        contentValues.put(TaskRows.readyWatchTime2, task.readyWatchTime2.getTime());
+        contentValues.put(TaskRows.acceptTime2, task.acceptTime2.getTime()) ;
+        contentValues.put(TaskRows.prepareEndTime2, task.prepareEndTime2.getTime()) ;
+        contentValues.put(TaskRows.endManeuresTime2, task.endManeuresTime2.getTime()) ;
+        contentValues.put(TaskRows.finishTime, task.finishTime.getTime()) ;
+        contentValues.put(TaskRows.isDeleted, task.isDeleted) ;
+        db.update(taskTable, contentValues, TaskRows.ID+"=" + task.id, null);
+    }
+
     public Task getTask(Long id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String[] select = {TaskRows.ID};
+        /*String[] select = {TaskRows.ID, TaskRows.operator, TaskRows.name, TaskRows.description,
+                TaskRows.createTime, TaskRows.receiveDate, TaskRows.startDate,
+                TaskRows.prepareStartTime, TaskRows.prepareEndTime, TaskRows.endManeuresTime,
+                TaskRows.readyWatchTime, TaskRows.endWatchTime, TaskRows.acceptTime,
+                TaskRows.endConnectionTime, TaskRows.readyFillTime, TaskRows.startFillTime,
+                TaskRows.endDisconnectionTime, TaskRows.endProbeTime, TaskRows.readyWatchTime2,
+                TaskRows.acceptTime2, TaskRows.prepareEndTime2, TaskRows.endManeuresTime2,
+                TaskRows.finishTime, TaskRows.isDeleted};*/
         Cursor cursor = db.query(taskTable, null, null, null, null, null, null);
+
+        Task task =  getTaskFromCursor(db, cursor);
+        cursor.close();
+        return task;
+    }
+
+    Task getTaskFromCursor(SQLiteDatabase db, final Cursor cursor) {
         Task task = new Task();
         task.operator = cursor.getString(cursor.getColumnIndex(TaskRows.operator));
         task.name = cursor.getString(cursor.getColumnIndex(TaskRows.name));
@@ -144,9 +188,63 @@ public class DataBase {
         task.finishTime = new Date(cursor.getLong(cursor.getColumnIndex(TaskRows.finishTime)));
         int prebool = cursor.getInt(cursor.getColumnIndex(TaskRows.isDeleted));
         task.isDeleted = (prebool > 0) ? true : false;
-        cursor.close();
+        String selection = PhotoRows.taskId + "=?";
+        String[] args = {Long.toString(task.id)};
+        Cursor pcursor = db.query(taskTable, null, selection, args, null, null, null);
+        if (pcursor.moveToFirst()) {
+            while (!pcursor.isAfterLast()) {
+                String field = pcursor.getString(pcursor.getColumnIndex(PhotoRows.field));
+                Uri purl = new Uri.Builder().path(pcursor.getString(pcursor.getColumnIndex(PhotoRows.url))).build();
+                Integer ind = pcursor.getInt(pcursor.getColumnIndex(PhotoRows.taskInd));
+                Long serverId = pcursor.getLong(pcursor.getColumnIndex(PhotoRows.serverId));
+                switch (field) {
+                    case "prepareImg":task.prepareImg.add(ind, purl);
+                        if (serverId != null) {
+                            task.prepareImgId.add(ind, serverId);
+                        }
+                        break;
+                    case "acceptImg":task.acceptImg.add(ind, purl);
+                        if (serverId != null) {
+                            task.acceptImgId.add(ind, serverId);
+                        }
+                        break;
+                    case "numbersImg":task.numbersImg.add(ind, purl);
+                        if (serverId != null) {
+                            task.numbersImgId.add(ind, serverId);
+                        }
+                        break;
+                    case "prepareImg2":task.prepareImg2.add(ind, purl);
+                        if (serverId != null) {
+                            task.prepareImgId2.add(ind, serverId);
+                        }
+                        break;
+                    case "acceptImg2":task.acceptImg2.add(ind, purl);
+                        if (serverId != null) {
+                            task.acceptImgId2.add(ind, serverId);
+                        }
+                        break;
+                }
+                pcursor.moveToNext();
+            }
+        }
+        pcursor.close();
         return task;
     }
+
+    ArrayList<Task> getAll() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.query(taskTable, null, null, null, null, null, null);
+        ArrayList<Task> ret = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                ret.add(getTaskFromCursor(db, cursor));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        return ret;
+    }
+
     /*
     public void addTask(Task task) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
